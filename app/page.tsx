@@ -32,13 +32,19 @@ export default function Home() {
       },
       body: JSON.stringify({word: word[row]})
     }).then(res => res.json()).then(data => {
+      if (!data.word){
+        setColumn(0)
+        setWord(word.map((l, i) => i === row ? ["","","","",""] : l))
+        return 
+      }
       if (data.word.every((l: "none" | "correct" | "contains" | "incorrect") => l === "correct")) {
         router.push("/correct")
       }
       setLetterStatus(letterStatus.map((l, i) => i === row ? data.word : l))
+      setRow(row + 1)
+      setColumn(0)
     })
-    setRow(row + 1)
-    setColumn(0)
+
   }
   return (
     <main className="flex flex-col items-center justify-center h-screen" >

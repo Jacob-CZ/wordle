@@ -10,6 +10,16 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const correctnessArray : Array<"none" | "correct" | "contains" | "incorrect"> = ["none","none","none","none","none"]
     const word: string[] = body.word
+    if (word.length !== 5) {
+        return NextResponse.json({message: "Word must be 5 characters long"})
+    }
+    if (word.some(l => l.length !== 1)) {
+        return NextResponse.json({message: "Each character must be a single letter"})
+    }
+    if(!words.includes(word.join("").toLowerCase())){
+        console.log(word.join("")) 
+        return NextResponse.json({message: "Word is not in the dictionary"})
+    }
     word.forEach((w, i) => {
         if (secretWord[i] === w) {
             correctnessArray[i] = "correct"

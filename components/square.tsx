@@ -35,6 +35,9 @@ export default function Square(props: {
 			inputRef.current!.style.backgroundColor = "transparent"
 		}
 	}, [props.state])
+    useEffect(() => {
+        inputRef.current!.value = props.word[props.row][props.column]
+    }, [props.row, props.column, props.word])
 	const handlechange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.value.length > 1) {
 			e.target.value = e.target.value[0]

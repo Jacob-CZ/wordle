@@ -29,7 +29,7 @@ export default function Model(props) {
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.Mesh_0.geometry} rotation={[0,-Math.PI/4,0]} scale={5} position={[0, 0, 0]} >
-      <animated.meshStandardMaterial map={materials.Material_0.map} roughness={0} color={color} />
+      <animated.meshStandardMaterial map={materials.Material_0.map} roughness={0} color={color} flatShading={false} />
       </mesh>
     </group>
   )

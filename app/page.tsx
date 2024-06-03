@@ -12,11 +12,13 @@ export default function Home() {
   const [letterStatus, setLetterStatus] = useState<Array<Array<"none" | "correct" | "contains" | "incorrect">>>(Array.from({length:6}).map(() => (["none","none","none","none","none"])))
   const [column, setColumn] = useState(0)
   const [row, setRow] = useState(0)
-  const [finished, setFinished] = useState(false)
+  const [finished, setFinished] = useState(true)
   const router = useRouter()
   useEffect(() => {
     if (Cookies.get('Today') === 'true') {
       setFinished(true)
+    }else{
+      setFinished(false)
     }
   },[])
   const submit = () => {

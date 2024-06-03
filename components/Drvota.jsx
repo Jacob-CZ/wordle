@@ -6,18 +6,31 @@ Command: npx gltfjsx@6.2.18 public/drvota.glb
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { animated, useSpring } from '@react-spring/three'
+import useMousePosition from './useMousePosition'
 export default function Model(props) {
+  const { x, y } = useMousePosition()
   const { nodes, materials } = useGLTF('/drvota.glb')
+  const {color} = useSpring({
+    from: { color: '#fff' },
+    to: [{ color: '#f00' }, { color: '#fff' }],
+  
+    config: { duration: 1000 },
+    loop: true
+  })
   useFrame(({ clock, camera }) => {
     const elapsedTime = clock.getElapsedTime();
     const radius = 10; // Define the radius of the circular path
-    camera.position.x = radius * Math.cos(elapsedTime);
-    camera.position.z = radius * Math.sin(elapsedTime);
+    camera.position.x = radius * Math.cos(x/500  -1  ) ;
+    camera.position.z = radius * Math.sin(x/500  -1 ) ;
+    camera.position.y =  y /100;
     camera.lookAt(0, 0, 0); // Make the camera always look at the center of the scene
   });
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes.Mesh_0.geometry} material={materials.Material_0} rotation={[0,-Math.PI/4,0]} scale={5} position={[0, 0, 0]} />
+      <mesh geometry={nodes.Mesh_0.geometry} rotation={[0,-Math.PI/4,0]} scale={5} position={[0, 0, 0]} >
+      <animated.meshStandardMaterial map={materials.Material_0.map} roughness={0} color={color} />
+      </mesh>
     </group>
   )
 }

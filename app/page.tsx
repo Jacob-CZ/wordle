@@ -1,8 +1,10 @@
 "use client"
 
 import Square from "@/components/square";
+import Warn from "@/components/warn";
+import Cookies, { set } from "js-cookie";
 import { useRouter } from "next/navigation";
-import { KeyboardEvent, ChangeEvent, ChangeEventHandler, EventHandler, useState, useRef, useEffect } from "react";
+import { KeyboardEvent, ChangeEvent, ChangeEventHandler, EventHandler, useState, useRef, useEffect, use } from "react";
 import { TypeAnimation } from "react-type-animation";
 const secretWord = "HELLO"
 export default function Home() {
@@ -10,8 +12,17 @@ export default function Home() {
   const [letterStatus, setLetterStatus] = useState<Array<Array<"none" | "correct" | "contains" | "incorrect">>>(Array.from({length:6}).map(() => (["none","none","none","none","none"])))
   const [column, setColumn] = useState(0)
   const [row, setRow] = useState(0)
+  const [finished, setFinished] = useState(false)
   const router = useRouter()
+  useEffect(() => {
+    if (Cookies.get('Today') === 'true') {
+      setFinished(true)
+    }
+  },[])
   const submit = () => {
+    if (finished) {
+      return;
+    }
     fetch("/api/validate_word", {
       method: "POST",
       headers: {
@@ -49,6 +60,7 @@ export default function Home() {
           ))
         ))}
       </div>
+      {finished && <Warn />}
     </main>
   );
 }

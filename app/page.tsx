@@ -28,7 +28,7 @@ export default function Home() {
     setColumn(0)
   }
   return (
-    <main className="flex flex-col items-center justify-center h-screen">
+    <main className="flex flex-col items-center justify-center h-screen" >
       <TypeAnimation
         sequence={[
           // Same substring at the start will only be typed out once, initially

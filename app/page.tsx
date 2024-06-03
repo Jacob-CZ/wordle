@@ -47,6 +47,11 @@ export default function Home() {
       setLetterStatus(letterStatus.map((l, i) => i === row ? data.word : l))
       setRow(row + 1)
       setColumn(0)
+      if (row === 5) {
+        setFinished(true)
+        Cookies.set('Today', 'true')
+        window.location.reload()
+      }
     })
 
   }

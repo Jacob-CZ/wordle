@@ -22,6 +22,7 @@ export default function Home() {
     }
   },[])
   const submit = () => {
+    console.log(word)
     if (finished) {
       return;
     }
@@ -40,6 +41,7 @@ export default function Home() {
       if (data.word.every((l: "none" | "correct" | "contains" | "incorrect") => l === "correct")) {
         router.push("/correct")
       }
+      console.log(data.word)
       setLetterStatus(letterStatus.map((l, i) => i === row ? data.word : l))
       setRow(row + 1)
       setColumn(0)

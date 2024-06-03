@@ -38,6 +38,13 @@ export default function Square(props: {
     useEffect(() => {
         inputRef.current!.value = props.word[props.row][props.column]
     }, [props.row, props.column, props.word])
+    useEffect(() => {
+        if (inputRef.current?.value === "") {
+            let newWord = [...props.word]
+            newWord[props.row][props.column] = ""
+            props.setWord(newWord)
+        }
+    }, [inputRef.current?.value])
 	const handlechange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.value.length > 1) {
 			e.target.value = e.target.value[0]
@@ -60,6 +67,8 @@ export default function Square(props: {
 			if (inputRef.current!.value.length !== 0) {
 				e.preventDefault()
 				inputRef.current!.value = ""
+
+                
 			}
 			props.setColumn(props.currentColumn - 1)
 		}

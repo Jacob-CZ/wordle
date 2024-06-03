@@ -26,11 +26,11 @@ export default function Square(props: {
 	}, [props.currentColumn, props.currentRow])
 	useEffect(() => {
 		if (props.state === "correct") {
-			inputRef.current!.style.backgroundColor = "green"
+			inputRef.current!.style.backgroundColor = "#6a994e"
 		} else if (props.state === "incorrect") {
-			inputRef.current!.style.backgroundColor = "red"
+			inputRef.current!.style.backgroundColor = "#d62828"
 		} else if (props.state === "contains") {
-			inputRef.current!.style.backgroundColor = "yellow"
+			inputRef.current!.style.backgroundColor = "#ffc300"
 		} else {
 			inputRef.current!.style.backgroundColor = "transparent"
 		}

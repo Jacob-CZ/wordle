@@ -78,6 +78,7 @@ export default function Square(props: {
 			newWord[props.row][props.column] = e.key.toUpperCase()
 			props.setWord(newWord)
 		}
+        //bild pls
 	}
 
 	return (

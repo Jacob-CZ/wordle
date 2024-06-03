@@ -1,8 +1,8 @@
 "use client"
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import React, { useEffect, useState } from 'react';
 import Confetti from 'react-confetti';
-import Model from "@/components/Drvotka_uwu"
+import Model from "@/components/Drvota"
 import { OrbitControls } from '@react-three/drei';
 export default function Page() {
   const [width, setWidth] = useState(0);
@@ -30,10 +30,10 @@ export default function Page() {
         width={width}
         height={height}
       />
-      <Canvas>
+      <Canvas camera={{position:[0,8,0]}}>
         <OrbitControls/>
         <ambientLight />
-        <pointLight position={[10, 10, 10]} />
+        <pointLight intensity={1000} position={[10,10,10]} />
         <Model/>
       </Canvas>
     </main>

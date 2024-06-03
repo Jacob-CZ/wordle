@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-let secretWord = "ARGOT"
+let secretWord = "DELTA"
 import words from "@/public/words.json"
 export async function POST(request: NextRequest) {
     const body = await request.json()

@@ -13,6 +13,7 @@ export default function Home() {
   const [column, setColumn] = useState(0)
   const [row, setRow] = useState(0)
   const [finished, setFinished] = useState(true)
+  const [shake, setShake] = useState(-1)
   const router = useRouter()
   useEffect(() => {
     if (Cookies.get('Today') === 'true') {
@@ -34,6 +35,7 @@ export default function Home() {
       body: JSON.stringify({word: word[row]})
     }).then(res => res.json()).then(data => {
       if (!data.word){
+        setShake(row)
         setColumn(0)
         setWord(word.map((l, i) => i === row ? ["","","","",""] : l))
         return 
@@ -48,6 +50,7 @@ export default function Home() {
     })
 
   }
+
   return (
     <main className="flex flex-col items-center justify-center h-screen" >
       <TypeAnimation
@@ -66,7 +69,7 @@ export default function Home() {
       <div className=" grid grid-cols-5 grid-rows-6 gap-4">
         {Array.from({ length: 6 }).map((_, i) => (
           Array.from({ length: 5 }).map((_, j) => (
-          <Square state={letterStatus[i][j]} word={word} setWord={setWord} setColumn={setColumn} key={i*5 + j} row={i} column={j} currentRow={row} currentColumn={column} submit={submit} />
+          <Square shake={shake} setshake={setShake} state={letterStatus[i][j]} word={word} setWord={setWord} setColumn={setColumn} key={i*5 + j} row={i} column={j} currentRow={row} currentColumn={column} submit={submit} />
           ))
         ))}
       </div>

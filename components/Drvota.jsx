@@ -12,8 +12,8 @@ export default function Model(props) {
   const { x, y } = useMousePosition()
   const { nodes, materials } = useGLTF('/drvota.glb')
   const {color} = useSpring({
-    from: { color: '#fff' },
-    to: [{ color: '#f00' }, { color: '#fff' }],
+    from: { color: '#f00' },
+    to: [{ color: '#fff' }, { color: '#f00' }],
   
     config: { duration: 1000 },
     loop: true

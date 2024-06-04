@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import words from "@/public/words.json"
-let secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase()
+let secretWord = "DELTA"
 export async function POST(request: NextRequest) {
     console.log(secretWord)
     const cookies = request.cookies

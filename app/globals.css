@@ -36,3 +36,10 @@ input {
   color: #0000;
   text-shadow: 0px 0px 1px #fff;
 }
+
+.barcode{
+  font-family: "Libre Barcode 128 Text", system-ui;
+  font-weight: 400;
+  font-style: normal;
+
+}

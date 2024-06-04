@@ -39,6 +39,11 @@ export default function Square(props: {
 			props.row === props.currentRow
 		) {
 			inputRef.current?.focus()
+			inputRef.current!.value = ""
+			let newWord = [...props.word]
+			newWord[props.row][props.column] = ""
+			props.setWord(newWord)
+
             animate(y, -10,{duration:0.1, ease:"easeInOut"})
 		} else {
             animate(y, 0,{duration:0.1, ease:"easeInOut"})
@@ -61,13 +66,6 @@ export default function Square(props: {
     useEffect(() => {
         inputRef.current!.value = props.word[props.row][props.column]
     }, [props.row, props.column, props.word])
-    useEffect(() => {
-        if (inputRef.current?.value === "") {
-            let newWord = [...props.word]
-            newWord[props.row][props.column] = ""
-            props.setWord(newWord)
-        }
-    }, [inputRef.current?.value])
 	const handlechange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.value.length > 1) {
 			e.target.value = e.target.value[0]
@@ -87,11 +85,12 @@ export default function Square(props: {
 			props.currentColumn > 0 &&
 			props.currentColumn % 5 !== 0
 		) {
-			if (inputRef.current!.value.length !== 0) {
-				e.preventDefault()
+			e.preventDefault()
+			if(props.column ===  4){
 				inputRef.current!.value = ""
-
-                
+				let newWord = [...props.word]
+				newWord[props.row][props.column] = ""
+				props.setWord(newWord)
 			}
 			props.setColumn(props.currentColumn - 1)
 		}

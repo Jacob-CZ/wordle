@@ -73,7 +73,7 @@ export default function Home() {
         ]}
         wrapper="span"
         speed={20}
-        style={{ fontSize: '10em', display: 'inline-block', fontFamily: 'monospace' }}
+        className="barcode text-9xl text-red-600 mb-5"
         repeat={Infinity}
       />
       <div className=" grid grid-cols-5 grid-rows-6 gap-4">

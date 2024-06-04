@@ -49,7 +49,12 @@ export default function Home() {
       setColumn(0)
       if (row === 5) {
         setFinished(true)
-        Cookies.set('Today', 'true')
+        const now = new Date();
+        const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+        const expiresIn = (endOfDay.getTime() - now.getTime()) / 1000; // Convert to seconds
+      
+        // Set the cookie to expire at the end of the day
+        Cookies.set('Today', 'true', { expires: expiresIn / (60 * 60 * 24) }); // Convert seconds to days for js-cookie
         window.location.reload()
       }
     })

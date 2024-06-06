@@ -2,7 +2,7 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import React, { useEffect, useState } from 'react';
 import Confetti from 'react-confetti';
-import Model from "@/components/Drvota"
+import {Model} from "@/components/Champions"
 import { OrbitControls } from '@react-three/drei';
 import Cookies from 'js-cookie';
 export default function Page() {

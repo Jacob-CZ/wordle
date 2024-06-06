@@ -111,7 +111,7 @@ export default function Square(props: {
 			e.preventDefault()
 			props.submit()
 		}
-		if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
+		if (e.key.length === 1 && e.key.match(/[a-zA-Z]/i)) {
 			e.preventDefault()
 			inputRef.current!.value = e.key.toUpperCase()
 			let newWord = [...props.word]

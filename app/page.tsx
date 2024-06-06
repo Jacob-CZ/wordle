@@ -14,8 +14,10 @@ export default function Home() {
   const [row, setRow] = useState(0)
   const [finished, setFinished] = useState(true)
   const [shake, setShake] = useState(-1)
+  const [startTimestamp, setStartTimestamp] = useState<number>(0)
   const router = useRouter()
   useEffect(() => {
+    setStartTimestamp(new Date().getTime())
     if (Cookies.get('Today') === 'true') {
       setFinished(true)
     }else{
@@ -23,7 +25,9 @@ export default function Home() {
     }
   },[])
   const submit = () => {
-    console.log(word)
+    const currentTimestamp = new Date().getTime()
+    const elapsed = new Date(currentTimestamp - startTimestamp)
+    console.log( elapsed.getMinutes() + " minutes and " + elapsed.getSeconds() + " seconds and " + elapsed.getMilliseconds() + " milliseconds")
     if (finished) {
       return;
     }

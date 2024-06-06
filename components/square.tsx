@@ -1,6 +1,5 @@
 import { useEffect, useRef, KeyboardEvent, ChangeEvent, use, useState } from "react"
 import { animate, motion, useAnimate, useMotionValue } from "framer-motion"
-import { a } from "@react-spring/three"
 export default function Square(props: {
 	state: "none" | "correct" | "contains" | "incorrect"
 	word: Array<Array<string>>
@@ -57,17 +56,17 @@ export default function Square(props: {
 			animate(height, "100%", { duration: 0.1, ease: "easeInOut", delay: props.column * 0.1 })
 			animate(rorateX, 180, { duration: 1, ease: "easeInOut", delay: props.column * 0.1 })
 			setTimeout(() => setRotate(180), 500 + props.column * 100)
-			setColor("#2a9d8f")
+			setColor("#a7c957")
 		} else if (props.state === "incorrect") {
 			animate(height, "100%", { duration: 0.1, ease: "easeInOut", delay: props.column * 0.1 })
 			animate(rorateX, 180, { duration: 1, ease: "easeInOut", delay: props.column * 0.1 })
 			setTimeout(() => setRotate(180), 500 + props.column * 100)
-			setColor("#e76f51")
+			setColor("#DC2626")
 		} else if (props.state === "contains") {
 			animate(height, "100%", { duration: 0.1, ease: "easeInOut", delay: props.column * 0.1 })
 			animate(rorateX, 180, { duration: 1, ease: "easeInOut", delay: props.column * 0.1 })
 			setTimeout(() => setRotate(180), 500 + props.column * 100)
-			setColor("#f4a261")
+			setColor("#fcbf49")
 		} else {
 			inputRef.current!.style.backgroundColor = "transparent"
 		}
@@ -127,7 +126,7 @@ export default function Square(props: {
 	}
 
 	return (
-		<motion.div className="relative" style={{rotateX: rorateX, transformStyle: "preserve-3d", perspective: 800, rotateZ: rotate, rotateY: rotate}}>
+		<motion.div className="relative square" style={{rotateX: rorateX, transformStyle: "preserve-3d", perspective: 800, rotateZ: rotate, rotateY: rotate}}>
 			<motion.input
 				ref={inputRef}
 				onBlur={handleblur}

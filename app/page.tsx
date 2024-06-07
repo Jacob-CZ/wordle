@@ -3,6 +3,7 @@
 import Square from "@/components/square";
 import Warn from "@/components/warn";
 import Cookies, { set } from "js-cookie";
+import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
 import { KeyboardEvent, ChangeEvent, ChangeEventHandler, EventHandler, useState, useRef, useEffect, use } from "react";
 import { TypeAnimation } from "react-type-animation";
@@ -19,9 +20,18 @@ export default function Home() {
   useEffect(() => {
     setStartTimestamp(new Date().getTime())
     if (Cookies.get('Today') === 'true') {
+      const now = new Date();
+      const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+      const expiresIn = (endOfDay.getTime() - now.getTime()) / 1000; // Convert to seconds
+      Cookies.set('Today','true', { expires: expiresIn / (60 * 60 * 24) })
       setFinished(true)
     }else{
       setFinished(false)
+    }
+    if(Cookies.get('row') && Cookies.get('rowData') && Cookies.get('letterStatus')){
+      setRow(Number(Cookies.get('row')))
+      setWord(JSON.parse(Cookies.get('rowData')!))
+      setLetterStatus(JSON.parse(Cookies.get('letterStatus')!))
     }
   },[])
   const submit = () => {
@@ -51,6 +61,12 @@ export default function Home() {
       setLetterStatus(letterStatus.map((l, i) => i === row ? data.word : l))
       setRow(row + 1)
       setColumn(0)
+      const now = new Date();
+      const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+      const expiresIn = (endOfDay.getTime() - now.getTime()) / 1000; // Convert to seconds
+      Cookies.set('row', (row + 1).toString(), { expires: expiresIn / (60 * 60 * 24) })
+      Cookies.set('rowData', JSON.stringify(word), { expires : expiresIn / (60 * 60 * 24)})
+      Cookies.set('letterStatus', JSON.stringify(letterStatus.map((l, i) => i === row ? data.word : l)), { expires : expiresIn / (60 * 60 * 24)})
       if (row === 5) {
         setFinished(true)
         const now = new Date();

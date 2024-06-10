@@ -2,6 +2,7 @@
 
 import Square from "@/components/square";
 import Warn from "@/components/warn";
+import { time } from "console";
 import Cookies, { set } from "js-cookie";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
@@ -18,11 +19,12 @@ export default function Home() {
   const [startTimestamp, setStartTimestamp] = useState<number>(0)
   const router = useRouter()
   useEffect(() => {
-    setStartTimestamp(new Date().getTime())
+    const startTimestamp = Number(Cookies.get('time')) || new Date().getTime()
+    setStartTimestamp(startTimestamp)
+    const now = new Date();
+    const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    const expiresIn = (endOfDay.getTime() - now.getTime()) / 1000; // Convert to seconds
     if (Cookies.get('Today') === 'true') {
-      const now = new Date();
-      const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
-      const expiresIn = (endOfDay.getTime() - now.getTime()) / 1000; // Convert to seconds
       Cookies.set('Today','true', { expires: expiresIn / (60 * 60 * 24) })
       setFinished(true)
     }else{
@@ -33,20 +35,27 @@ export default function Home() {
       setWord(JSON.parse(Cookies.get('rowData')!))
       setLetterStatus(JSON.parse(Cookies.get('letterStatus')!))
     }
+    const interval = setInterval(() => {
+      if (!startTimestamp) return
+      const currentTimestamp = new Date().getTime()
+      const elapsed = new Date(currentTimestamp - startTimestamp)
+      Cookies.set('time', elapsed.getTime().toString(),{ expires : expiresIn / (60 * 60 * 24)})
+    }, 0)
+    return () => clearInterval(interval)
   },[])
   const submit = () => {
-    const currentTimestamp = new Date().getTime()
-    const elapsed = new Date(currentTimestamp - startTimestamp)
-    console.log( elapsed.getMinutes() + " minutes and " + elapsed.getSeconds() + " seconds and " + elapsed.getMilliseconds() + " milliseconds")
+
     if (finished) {
       return;
     }
+    const currentTimestamp = new Date().getTime()
+    const elapsed = new Date(currentTimestamp - startTimestamp)
     fetch("/api/validate_word", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({word: word[row]})
+      body: JSON.stringify({word: word[row], time : elapsed.getTime()})
     }).then(res => res.json()).then(data => {
       if (!data.word){
         setShake(row)
@@ -55,7 +64,7 @@ export default function Home() {
         return 
       }
       if (data.word.every((l: "none" | "correct" | "contains" | "incorrect") => l === "correct")) {
-        router.push("/correct")
+        router.push(`/correct`)
       }
       console.log(data.word)
       setLetterStatus(letterStatus.map((l, i) => i === row ? data.word : l))

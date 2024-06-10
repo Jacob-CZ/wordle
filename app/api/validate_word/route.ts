@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import words from "@/public/words.json"
-let secretWord = "DELTA"
+let secretWord = process.env.PRODUCTION === "true" ? words[Math.floor(Math.random() * words.length)] : 'DELTA'
 export async function POST(request: NextRequest) {
+    console.log(process.env.PRODUCTION)
     console.log(secretWord)
     const cookies = request.cookies
     const finished = cookies.get("Today")
@@ -11,6 +12,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const correctnessArray : Array<"none" | "correct" | "contains" | "incorrect"> = ["none","none","none","none","none"]
     const word: string[] = body.word
+    const time: number = body.time
+    const elapsed = new Date(time)
+    console.log(elapsed.getMinutes() + ":" + elapsed.getSeconds() + ":" + elapsed.getMilliseconds())    
     if (word.length !== 5) {
         return NextResponse.json({message: "Word must be 5 characters long"})
     }

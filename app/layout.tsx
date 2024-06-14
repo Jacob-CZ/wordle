@@ -18,6 +18,7 @@ export default function RootLayout({
     <>
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"></link>
       </head>
       <html lang="en">
         <body className={inter.className}>{children}</body>
